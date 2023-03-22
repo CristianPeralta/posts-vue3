@@ -5,7 +5,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "overrides": [
     ],
@@ -16,7 +17,8 @@
         "project": ["./tsconfig.json"]
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules": {
         "indent": [
@@ -34,6 +36,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "prettier/prettier": [2, { "useTabs": true }]
     }
 }

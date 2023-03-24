@@ -11,5 +11,6 @@ router.get("/", (req: Request, res: Response) => {
 router.post("/posts", postController.add);
 router.get("/posts", postController.get);
 router.delete("/posts/:id", postController.deleteOne);
+router.put("/posts", postController.updateOne);
 
 export default router;

@@ -3,8 +3,7 @@
 import express from "express";
 import { Response, Request, NextFunction } from "express";
 import { MongooseConnector } from "./db/mongoose-connector";
-import mongoose from "mongoose";
-import indexRoute from "./routes/index";
+import routes from "./routes/index";
 import morgan from "morgan";
 
 const app = express();
@@ -26,7 +25,7 @@ app.use(
 mongooseConnector
 	.connect()
 	.then(() => {
-		app.use("/", indexRoute);
+		app.use(routes);
 
 		app.use((error: any, res: Response, next: NextFunction) => {
 			try {

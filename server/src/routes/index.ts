@@ -8,6 +8,7 @@ router.get("/", (req: Request, res: Response) => {
 	return res.json(200);
 });
 
-router.post("/post", postController.add);
+router.post("/posts", postController.add);
+router.get("/posts", postController.get);
 
 export default router;

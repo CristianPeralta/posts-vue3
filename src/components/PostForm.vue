@@ -1,20 +1,18 @@
 <template >
     <div >
       <h1>Add Post</h1>
-        <div>
+      <form>
           <div>
-            <input type="text" name="title" placeholder="Title" v-model="title">
+            <div>
+              <input type="text" name="title" placeholder="Title" v-model="title">
+              <textarea rows="15" cols="15" 
+                  placeholder="Description" 
+                  v-model="description">
+              </textarea>
+              <button class="app_post_btn" @click="addPost">Add</button>
+            </div>
           </div>
-          <div>
-            <textarea rows="15" cols="15" 
-                placeholder="Description" 
-                v-model="description">
-            </textarea>
-          </div>
-          <div>
-            <button class="app_post_btn" @click="addPost">Add</button>
-          </div>
-        </div>
+      </form>
     </div>
 </template>
 

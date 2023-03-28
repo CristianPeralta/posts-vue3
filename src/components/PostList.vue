@@ -8,12 +8,14 @@
                 <span class="font-semibold text-gray-900 dark:text-white">{{ post.description }}</span>
                 <div>
                     <a>
-                        <span @click="editPost()" class="glyphicon glyphicon-edit"
-                                aria-hidden="true"></span>
+                        <button @click="editPost()"  class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                            EDIT
+                        </button>
                     </a>
                     <a>
-                        <span @click="deletePost()" class="glyphicon glyphicon-trash"
-                                aria-hidden="true"></span>
+                        <button @click="deletePost()" class="bg-transparent hover:bg-blue-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                            DELETE
+                        </button>
                     </a>
                 </div>
             </template>
@@ -53,10 +55,12 @@
                 });
             },
             editPost () {
+                alert("Edit Post");
             },
             updatePost () {
             },
             deletePost () {
+                alert("Delete this Post");
             },
             cancelPost () {
             },

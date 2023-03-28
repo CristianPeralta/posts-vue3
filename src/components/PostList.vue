@@ -38,8 +38,8 @@
                     _id: "123dasd123123"
                 }
                 ] as Post[],
-                titleDraft: '' as String,
-                descriptionDraft: '' as String
+                titleDraft: '' as string,
+                descriptionDraft: '' as string
             }
         },
         created () {

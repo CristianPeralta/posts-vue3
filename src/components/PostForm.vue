@@ -25,8 +25,8 @@ import { defineComponent } from "vue"
 export default defineComponent({
     data() {
         return {
-            title: '' as String,
-            description: 's' as String,
+            title: '' as string,
+            description: 's' as string,
         }
     },
     methods: {

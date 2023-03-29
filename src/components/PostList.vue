@@ -13,7 +13,7 @@
 
                 <div class="sm:col-span-1">
                         <label for="actions" class="block text-sm font-medium leading-6 text-gray-900">Actions</label>
-                    </div>
+                </div>
             </li>
             <li v-for="(post, index) in posts" :key="index" class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
                 <div class="sm:col-span-1 sm:col-start-1">

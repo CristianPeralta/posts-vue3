@@ -64,6 +64,7 @@ export default defineComponent({
     methods: {
         addPost () {
             alert(`submit new post: title => ${this.title} , description => ${this.description}`);
+            this.$router.go(0);
         }
     }
 })

@@ -1,6 +1,6 @@
 <template >
-    <div class="container my-24 px-6 mx-auto">
-        <section class="mb-32 text-gray-800 text-center">
+    <div class="container my-5 px-6 mx-auto">
+        <section class="mb-5 text-gray-800 text-center">
             <div class="flex flex-wrap justify-center">
                 <div class="grow-0 shrink-0 flex-basis w-full lg:w-6/12 px-3">
 

@@ -1,7 +1,8 @@
 <template>
       <div class="flex flex-col justify-center items-center h-screen">
+        <PostForm></PostForm>
         <h2 class="text-2xl font-bold mb-4">Posts</h2>
-        <ul class="w-1/2">
+        <ul class="container my-5 px-6 mx-auto lg:w-6/12 justify-center">
             <li class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
                 <div class="sm:col-span-1 sm:col-start-1">
                     <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
@@ -15,7 +16,7 @@
                         <label for="actions" class="block text-sm font-medium leading-6 text-gray-900">Actions</label>
                 </div>
             </li>
-            <li v-for="(post, index) in posts" :key="index" class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
+            <li v-for="post in posts" :key="post._id" class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
                 <div class="sm:col-span-1 sm:col-start-1">
                     <div class="mt-2">
                         <span type="text" name="title" id="title" class="w-full py-1.5 text-gray-900 sm:text-sm sm:leading-6">
@@ -32,12 +33,12 @@
                     </div>
                 </div>
                 <div>
-                    <button @click="editPost()" class="mr-2">
+                    <button @click="editPost(post._id)" class="mr-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                         </svg>
                     </button>
-                    <button @click="deletePost()">
+                    <button @click="deletePost(post._id)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                         </svg>
@@ -52,47 +53,47 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { Post } from "@/interfaces/Post"
+    import PostForm from "./PostForm.vue"
 
     export default defineComponent({
-        data() {
-            return {
-                posts: [
+    data() {
+        return {
+            posts: [
                 {
                     title: "title 0",
                     description: "descsriptjon 0",
                     _id: "123dasd123123"
                 }
-                ] as Post[],
-                title: '' as string,
-                description: '' as string
-,                titleDraft: '' as string,
-                descriptionDraft: '' as string
-            }
+            ] as Post[],
+            titleDraft: "" as string,
+            descriptionDraft: "" as string
+        };
+    },
+    created() {
+        this.getPosts();
+    },
+    methods: {
+        getPosts() {
+            console.log("getting posts...");
+            this.posts.push({
+                title: "title 1",
+                description: "descsriptjon 1",
+                _id: "123dasd1231234"
+            });
         },
-        created () {
-            this.getPosts();
+        editPost(id: string) {
+            alert(`Edit this Post id => ${id}`);
         },
-        methods: {
-            getPosts () {
-                console.log("getting posts...");
-                this.posts.push({
-                    title: "title 1",
-                    description: "descsriptjon 1",
-                    _id: "123dasd123123"
-                });
-            },
-            editPost () {
-                alert("Edit Post");
-            },
-            updatePost () {
-            },
-            deletePost () {
-                alert("Delete this Post");
-            },
-            cancelPost () {
-            },
-            isEmpty () {
-            },
+        updatePost() {
         },
-    })
+        deletePost(id: string) {
+            alert(`Delete this Post id => ${id}`);
+        },
+        cancelPost() {
+        },
+        isEmpty() {
+        },
+    },
+    components: { PostForm }
+})
 </script>

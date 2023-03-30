@@ -17,7 +17,7 @@
                 </div>
             </li>
             <li v-for="post in posts" :key="post._id" class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
-                <template v-if="!isEditing">
+                <template v-if="!post.isEditing">
                     <div class="sm:col-span-1 sm:col-start-1">
                         <div class="mt-2">
                             <span type="text" name="title" id="title" class="w-full py-1.5 text-gray-900 sm:text-sm sm:leading-6">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </template>
-                <template v-if="isEditing">
+                <template v-if="post.isEditing">
                     <div class="sm:col-span-1 sm:col-start-1">
                         <div class="mt-2">
                             <input type="text" v-model="titleDraft" class="w-full py-1.5 text-gray-900 sm:text-sm sm:leading-6"
@@ -50,7 +50,7 @@
                     </div>
                 </template>
                 <div>
-                    <template v-if="!isEditing">
+                    <template v-if="!post.isEditing">
                         <button @click="editPost(post)" class="mr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -62,7 +62,7 @@
                             </svg>
                         </button>
                     </template>
-                    <template v-if="isEditing">
+                    <template v-if="post.isEditing">
                         <button @click="updatePost(post)" class="mr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -92,7 +92,6 @@
         return {
             defaultProp: { isEditing: false } as Pick<Post, 'isEditing'>,
             posts: [] as Post[],
-            isEditing: false as boolean,
             titleDraft: "" as string,
             descriptionDraft: "" as string
         };
@@ -124,20 +123,20 @@
             console.log("this.posts => ", this.posts);
         },
         editPost(post: Post) {
-            this.isEditing = !this.isEditing;
+            post.isEditing = !post.isEditing;
             this.titleDraft = post.title
             this.descriptionDraft = post.description
             // alert(`Edit this Post id => ${id}`);
         },
         updatePost(post: Post) {
-            this.isEditing = !this.isEditing;
+            post.isEditing = !post.isEditing;
             alert(`Edit this Post id => ${post._id} with title: ${this.titleDraft} and description: ${this.descriptionDraft}`);
         },
         deletePost(id: string) {
             alert(`Delete this Post id => ${id}`);
         },
         cancelPost(post: Post) {
-             this.isEditing = !this.isEditing;
+             post.isEditing = !post.isEditing;
         },
         isEmpty(str: string) {
             return str.replace(/^\s+/g, '').length

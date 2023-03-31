@@ -1,6 +1,5 @@
 <template>
       <div class="flex flex-col justify-center items-center h-screen">
-        <PostForm></PostForm>
         <h2 class="text-2xl font-bold mb-4">Posts</h2>
         <ul class="container my-5 px-6 mx-auto lg:w-6/12 justify-center">
             <li class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center mb-2">
@@ -85,7 +84,6 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { Post } from "@/interfaces/Post"
-    import PostForm from "./PostForm.vue"
 
     export default defineComponent({
     data() {
@@ -140,7 +138,6 @@
         isEmpty(str: string) {
             return str.replace(/^\s+/g, '').length;
         },
-    },
-    components: { PostForm }
+    }
 })
 </script>

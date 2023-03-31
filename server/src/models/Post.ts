@@ -5,10 +5,13 @@ interface IPost {
 	description: string;
 }
 
-const postSchema = new Schema({
-	title: { type: String, required: "Title is required" },
-	description: { type: String, default: "Description ..." },
-});
+const postSchema = new Schema(
+	{
+		title: { type: String, required: "Title is required" },
+		description: { type: String, default: "Description ..." },
+	},
+	{ versionKey: false },
+);
 
 const Post = model<IPost>("Post", postSchema);
 

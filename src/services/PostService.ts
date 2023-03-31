@@ -8,5 +8,8 @@ export const createPost = async (post: Post) =>
 export const getPosts = async (): Promise<AxiosResponse> => 
     await Api.get("/posts");
 
+export const updatePost = async (post: Post) => 
+    await Api.put("/posts", post);
+
 export const deletePost = async (id: string) => 
     await Api.delete(`/posts/${id}`);

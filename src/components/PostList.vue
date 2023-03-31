@@ -83,7 +83,7 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { Post } from "@/interfaces/Post"
-    import { getPosts, deletePost } from "@/services/PostService"
+    import { getPosts, updatePost, deletePost } from "@/services/PostService"
 
     export default defineComponent({
     data() {
@@ -112,9 +112,16 @@
             this.titleDraft = post.title
             this.descriptionDraft = post.description
         },
-        updatePost(post: Post) {
-            post.isEditing = !post.isEditing;
-            alert(`Edit this Post id => ${post._id} with title: ${this.titleDraft} and description: ${this.descriptionDraft}`);
+        async updatePost(post: Post) {
+            try {
+                post.isEditing = !post.isEditing;
+                post.title = this.titleDraft;
+                post.description = this.descriptionDraft;
+                await updatePost(post);
+                this.$router.go(0);
+            } catch (error) {
+                console.log(error);
+            }
         },
         async deletePost(id: string) {
             try {

@@ -80,10 +80,10 @@
       </div>
 </template>
 
-
 <script lang="ts">
     import { defineComponent } from "vue"
     import { Post } from "@/interfaces/Post"
+    import { getPosts } from "@/services/PostService"
 
     export default defineComponent({
     data() {
@@ -95,30 +95,18 @@
         };
     },
     created() {
-        this.getPosts();
+        this.getData();
     },
     methods: {
-        getPosts() {
+        async getData() {
             console.log("getting posts...");
-            const data: Post[] = [
-                {
-                    title: "title 0",
-                    description: "descsriptjon 0",
-                    _id: "123dasd123123"
-                },
-                {
-                    title: "title 1",
-                    description: "descsriptjon 1",
-                    _id: "123dasd1231234"
-                },
-            ];
-            this.posts = data.map(item => {
+            const { data } = await getPosts();
+            this.posts = data.map((item: Post)  => {
                 return {
                     ...this.defaultProp,
                     ...item
                 }
             });
-            console.log("this.posts => ", this.posts);
         },
         editPost(post: Post) {
             post.isEditing = !post.isEditing;

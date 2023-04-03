@@ -53,6 +53,8 @@
 <script lang="ts">
 
 import { defineComponent } from "vue"
+import { Post } from "@/interfaces/Post"
+import { createPost } from "@/services/PostService"
 
 export default defineComponent({
     data() {
@@ -62,9 +64,17 @@ export default defineComponent({
         }
     },
     methods: {
-        addPost () {
-            alert(`submit new post: title => ${this.title} , description => ${this.description}`);
-            this.$router.go(0);
+        async addPost () {
+            try {
+                const post: Post = {
+                    title: this.title,
+                    description: this.description,
+                };
+                await createPost(post);
+                this.$router.go(0);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 })

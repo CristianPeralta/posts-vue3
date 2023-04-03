@@ -5,6 +5,7 @@ import { Response, Request, NextFunction } from "express";
 import { MongooseConnector } from "./db/mongoose-connector";
 import routes from "./routes/index";
 import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
 
@@ -13,6 +14,7 @@ const mongooseConnector = new MongooseConnector({
 	dbName: "PostsVue3DB",
 });
 
+app.use(cors());
 //morgan used for logging
 app.use(morgan<Request, Response>("dev"));
 app.use(express.json());

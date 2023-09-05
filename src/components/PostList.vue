@@ -62,7 +62,7 @@
                         </button>
                     </template>
                     <template v-if="post.isEditing">
-                        <button v-if="isEmpty(titleDraft)" @click="updatePost(post)" class="mr-2">
+                        <button v-if="isTitleDraftEmpty" @click="updatePost(post)" class="mr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                             </svg>
@@ -81,62 +81,78 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent } from "vue"
+    import { defineComponent, ref, onMounted, computed } from "vue"
+    import { useRouter } from "vue-router"
     import { Post } from "@/interfaces/Post"
-    import { getPosts, updatePost, deletePost } from "@/services/PostService"
+    import * as postServices from "@/services/PostService"
 
     export default defineComponent({
-    data() {
-        return {
-            defaultProp: { isEditing: false } as Pick<Post, 'isEditing'>,
-            posts: [] as Post[],
-            titleDraft: "" as string,
-            descriptionDraft: "" as string
-        };
-    },
-    created() {
-        this.getData();
-    },
-    methods: {
-        async getData() {
-            const { data } = await getPosts();
-            this.posts = data.map((item: Post)  => {
-                return {
-                    ...this.defaultProp,
-                    ...item
-                }
-            });
-        },
-        editPost(post: Post) {
-            post.isEditing = !post.isEditing;
-            this.titleDraft = post.title
-            this.descriptionDraft = post.description
-        },
-        async updatePost(post: Post) {
-            try {
+        setup() {
+            const router = useRouter();
+            const isEditing = ref(false);
+            const posts = ref<Post[]>([]);
+            const titleDraft = ref("");
+            const descriptionDraft = ref("");
+
+            const getData = async () => {
+                const { data } = await postServices.getPosts();
+                posts.value = data.map((item: Post) => {
+                    return {
+                        isEditing: isEditing.value,
+                        ...item
+                    }
+                });
+            };
+
+            const editPost = (post: Post) => {
                 post.isEditing = !post.isEditing;
-                post.title = this.titleDraft;
-                post.description = this.descriptionDraft;
-                await updatePost(post);
-                this.$router.go(0);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async deletePost(id: string) {
-            try {
-                await deletePost(id);
-                this.$router.go(0);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        cancelPost(post: Post) {
-             post.isEditing = !post.isEditing;
-        },
-        isEmpty(str: string) {
-            return str.replace(/^\s+/g, '').length;
-        },
-    }
+                titleDraft.value = post.title;
+                descriptionDraft.value = post.description;
+            };
+
+
+            const updatePost = async (post: Post) => {
+                try {
+                    post.isEditing = !post.isEditing;
+                    post.title = titleDraft.value;
+                    post.description = descriptionDraft.value;
+                    await postServices.updatePost(post);
+                    router.go(0);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            const deletePost = async (id: string)  => {
+                try {
+                    await postServices.deletePost(id);
+                    router.go(0);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            const cancelPost = (post: Post) =>{
+                post.isEditing = !post.isEditing;
+            };
+            const isTitleDraftEmpty = computed(() => {
+                return titleDraft.value.replace(/^\s+/g, '').length;
+            });
+            onMounted(() => {
+                getData();
+            })
+            return {
+                isEditing,
+                posts,
+                titleDraft,
+                descriptionDraft,
+                getData,
+                editPost,
+                updatePost,
+                deletePost,
+                cancelPost,
+                isTitleDraftEmpty,
+            };
+        }
 })
 </script>

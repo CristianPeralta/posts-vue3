@@ -52,30 +52,29 @@
 
 <script lang="ts">
 
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
+import { useRouter } from "vue-router"
 import { Post } from "@/interfaces/Post"
 import { createPost } from "@/services/PostService"
 
 export default defineComponent({
-    data() {
-        return {
-            title: '' as string,
-            description: '' as string,
-        }
-    },
-    methods: {
-        async addPost () {
+    setup() {
+        const router = useRouter();
+        const title = ref("");
+        const description = ref("");
+        const addPost = async () => {
             try {
                 const post: Post = {
-                    title: this.title,
-                    description: this.description,
+                    title: title.value,
+                    description: description.value,
                 };
                 await createPost(post);
-                this.$router.go(0);
+                router.push({ path: '/', replace: true });
             } catch (error) {
                 console.log(error);
             }
         }
+        return {title, description, addPost};
     }
 })
 </script>
